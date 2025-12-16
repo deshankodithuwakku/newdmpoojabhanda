@@ -7,6 +7,26 @@
   align-items: center;
 }
 
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: white;
+}
+
+.brand-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
 .navbar-brand h2 {
   margin: 0;
 }

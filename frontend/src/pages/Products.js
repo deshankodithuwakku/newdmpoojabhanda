@@ -9,9 +9,6 @@ const Products = () => {
     name: '',
     description: '',
     daily_rate: '',
-    weekly_rate: '',
-    monthly_rate: '',
-    quantity_available: '',
     status: 'available'
   });
   const [editingId, setEditingId] = useState(null);
@@ -43,9 +40,6 @@ const Products = () => {
       formDataToSend.append('name', formData.name);
       formDataToSend.append('description', formData.description);
       formDataToSend.append('daily_rate', formData.daily_rate);
-      formDataToSend.append('weekly_rate', formData.weekly_rate || '');
-      formDataToSend.append('monthly_rate', formData.monthly_rate || '');
-      formDataToSend.append('quantity_available', formData.quantity_available);
       formDataToSend.append('status', formData.status);
       
       // Append images
@@ -73,9 +67,6 @@ const Products = () => {
       name: product.name,
       description: product.description,
       daily_rate: product.daily_rate,
-      weekly_rate: product.weekly_rate || '',
-      monthly_rate: product.monthly_rate || '',
-      quantity_available: product.quantity_available,
       status: product.status
     });
     setEditingId(product.id);
@@ -121,9 +112,6 @@ const Products = () => {
       name: '',
       description: '',
       daily_rate: '',
-      weekly_rate: '',
-      monthly_rate: '',
-      quantity_available: '',
       status: 'available'
     });
     setEditingId(null);
@@ -164,27 +152,6 @@ const Products = () => {
             onChange={(e) => setFormData({ ...formData, daily_rate: e.target.value })}
             required
             step="0.01"
-          />
-          <input
-            type="number"
-            placeholder="Weekly Rate (Optional)"
-            value={formData.weekly_rate}
-            onChange={(e) => setFormData({ ...formData, weekly_rate: e.target.value })}
-            step="0.01"
-          />
-          <input
-            type="number"
-            placeholder="Monthly Rate (Optional)"
-            value={formData.monthly_rate}
-            onChange={(e) => setFormData({ ...formData, monthly_rate: e.target.value })}
-            step="0.01"
-          />
-          <input
-            type="number"
-            placeholder="Quantity Available"
-            value={formData.quantity_available}
-            onChange={(e) => setFormData({ ...formData, quantity_available: e.target.value })}
-            required
           />
           <select
             value={formData.status}
@@ -248,8 +215,7 @@ const Products = () => {
             )}
             <h3>{product.name}</h3>
             <p>{product.description}</p>
-            <p><strong>Daily Rate:</strong> ${product.daily_rate}</p>
-            <p><strong>Available:</strong> {product.quantity_available}</p>
+            <p><strong>Daily Rate:</strong> Rs. {product.daily_rate}</p>
             <p><strong>Status:</strong> <span className={`status ${product.status}`}>{product.status}</span></p>
             {isLoggedIn && (
               <div className="card-actions">

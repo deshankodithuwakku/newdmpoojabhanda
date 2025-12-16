@@ -90,28 +90,15 @@ const Home = () => {
                   <p className="product-description">{product.description}</p>
                   <div className="product-pricing">
                     <div className="price-item">
-                      <span className="price-label">Daily:</span>
+                      <span className="price-label">Daily Rate:</span>
                       <span className="price-value">Rs. {product.daily_rate}</span>
                     </div>
-                    {product.weekly_rate && (
-                      <div className="price-item">
-                        <span className="price-label">Weekly:</span>
-                        <span className="price-value">Rs. {product.weekly_rate}</span>
-                      </div>
-                    )}
-                    {product.monthly_rate && (
-                      <div className="price-item">
-                        <span className="price-label">Monthly:</span>
-                        <span className="price-value">Rs. {product.monthly_rate}</span>
-                      </div>
-                    )}
                   </div>
                   <div className="product-availability">
                     <span className={`availability-badge ${product.status}`}>
                       {product.status === 'available' ? '✓ Available' : 
                        product.status === 'rented' ? 'Rented' : 'Maintenance'}
                     </span>
-                    <span className="quantity-info">Qty: {product.quantity_available}</span>
                   </div>
                 </div>
               </div>

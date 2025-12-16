@@ -80,9 +80,6 @@ const ProductDetail = () => {
               {product.status === 'available' ? '✓ Available' : 
                product.status === 'rented' ? 'Currently Rented' : 'Under Maintenance'}
             </span>
-            <span className="quantity-badge">
-              {product.quantity_available} units available
-            </span>
           </div>
 
           <div className="product-description">
@@ -91,24 +88,12 @@ const ProductDetail = () => {
           </div>
 
           <div className="pricing-section">
-            <h3>Rental Rates</h3>
+            <h3>Rental Rate</h3>
             <div className="pricing-grid">
               <div className="price-card">
                 <span className="price-period">Daily Rate</span>
                 <span className="price-amount">Rs. {product.daily_rate}</span>
               </div>
-              {product.weekly_rate && (
-                <div className="price-card">
-                  <span className="price-period">Weekly Rate</span>
-                  <span className="price-amount">Rs. {product.weekly_rate}</span>
-                </div>
-              )}
-              {product.monthly_rate && (
-                <div className="price-card">
-                  <span className="price-period">Monthly Rate</span>
-                  <span className="price-amount">Rs. {product.monthly_rate}</span>
-                </div>
-              )}
             </div>
           </div>
 

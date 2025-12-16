@@ -24,7 +24,10 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <h2>DM Pooja Bhanda</h2>
+        <Link to="/" className="brand-link">
+          <img src="/logo.png" alt="DM Pooja Bhanda Logo" className="brand-logo" />
+          <h2>DM Pooja Bhanda</h2>
+        </Link>
       </div>
       <ul className="navbar-menu">
         <li><Link to="/">Home</Link></li>
