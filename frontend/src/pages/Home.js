@@ -35,7 +35,7 @@ return (
           </div>
           <div className="hero-cta">
             <a href="#products" className="cta-button primary">View Equipment</a>
-            <a href="https://wa.me/94774288619" target="_blank" rel="noopener noreferrer" className="cta-button secondary">
+            <a href="tel:+94774288619" className="cta-button secondary">
               Contact Us
             </a>
           </div>
@@ -134,9 +134,9 @@ return (
         <div className="contact-social-section">
             <h2>Contact Us / අප හා සම්බන්ධ වන්න</h2>
             <div className="social-links">
-                <a href="https://wa.me/94774288619" target="_blank" rel="noopener noreferrer" className="social-link whatsapp">
+                <a href="tel:+94774288619" className="social-link whatsapp">
                     <span className="social-icon">📱</span>
-                    <span className="social-text">WhatsApp</span>
+                    <span className="social-text">Phone Call</span>
                 </a>
                 <a href="https://www.facebook.com/dmpoojabhanda" target="_blank" rel="noopener noreferrer" className="social-link facebook">
                     <span className="social-icon">📘</span>
