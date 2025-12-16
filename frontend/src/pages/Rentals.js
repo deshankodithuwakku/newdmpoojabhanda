@@ -19,6 +19,7 @@ const Rentals = () => {
     notes: ''
   });
   const [editingId, setEditingId] = useState(null);
+  const isLoggedIn = localStorage.getItem('auth_token');
 
   useEffect(() => {
     fetchRentals();
@@ -55,6 +56,10 @@ const Rentals = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isLoggedIn) {
+      alert('Please login to add or edit rentals');
+      return;
+    }
     try {
       if (editingId) {
         await rentalAPI.update(editingId, formData);
@@ -65,6 +70,9 @@ const Rentals = () => {
       resetForm();
     } catch (error) {
       console.error('Error saving rental:', error);
+      if (error.response?.status === 401) {
+        alert('Please login to add or edit rentals');
+      }
     }
   };
 
@@ -85,12 +93,19 @@ const Rentals = () => {
   };
 
   const handleDelete = async (id) => {
+    if (!isLoggedIn) {
+      alert('Please login to delete rentals');
+      return;
+    }
     if (window.confirm('Are you sure you want to delete this rental?')) {
       try {
         await rentalAPI.delete(id);
         fetchRentals();
       } catch (error) {
         console.error('Error deleting rental:', error);
+        if (error.response?.status === 401) {
+          alert('Please login to delete rentals');
+        }
       }
     }
   };
@@ -115,9 +130,11 @@ const Rentals = () => {
     <div className="rentals-container">
       <div className="header">
         <h1>Rentals</h1>
-        <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
-          {showForm ? 'Cancel' : 'New Rental'}
-        </button>
+        {isLoggedIn && (
+          <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
+            {showForm ? 'Cancel' : 'New Rental'}
+          </button>
+        )}
       </div>
 
       {showForm && (
@@ -220,8 +237,12 @@ const Rentals = () => {
                 <td>${rental.total_amount}</td>
                 <td><span className={`status ${rental.status}`}>{rental.status}</span></td>
                 <td>
-                  <button className="btn btn-sm btn-warning" onClick={() => handleEdit(rental)}>Edit</button>
-                  <button className="btn btn-sm btn-danger" onClick={() => handleDelete(rental.id)}>Delete</button>
+                  {isLoggedIn && (
+                    <>
+                      <button className="btn btn-sm btn-warning" onClick={() => handleEdit(rental)}>Edit</button>
+                      <button className="btn btn-sm btn-danger" onClick={() => handleDelete(rental.id)}>Delete</button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}

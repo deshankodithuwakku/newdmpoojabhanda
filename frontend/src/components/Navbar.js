@@ -24,7 +24,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <h2>Rental Shop</h2>
+        <h2>DM Pooja Bhanda</h2>
       </div>
       <ul className="navbar-menu">
         <li><Link to="/">Home</Link></li>

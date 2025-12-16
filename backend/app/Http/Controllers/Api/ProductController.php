@@ -23,8 +23,20 @@ class ProductController extends Controller
             'monthly_rate' => 'nullable|numeric|min:0',
             'quantity_available' => 'required|integer|min:0',
             'image' => 'nullable|string',
+            'images' => 'nullable|array',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'status' => 'nullable|in:available,rented,maintenance',
         ]);
+
+        // Handle multiple image uploads
+        if ($request->hasFile('images')) {
+            $imagePaths = [];
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('products', 'public');
+                $imagePaths[] = $path;
+            }
+            $validated['images'] = $imagePaths;
+        }
 
         $product = Product::create($validated);
         return response()->json($product, 201);
@@ -45,8 +57,20 @@ class ProductController extends Controller
             'monthly_rate' => 'nullable|numeric|min:0',
             'quantity_available' => 'required|integer|min:0',
             'image' => 'nullable|string',
+            'images' => 'nullable|array',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'status' => 'nullable|in:available,rented,maintenance',
         ]);
+
+        // Handle multiple image uploads
+        if ($request->hasFile('images')) {
+            $imagePaths = [];
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('products', 'public');
+                $imagePaths[] = $path;
+            }
+            $validated['images'] = $imagePaths;
+        }
 
         $product->update($validated);
         return response()->json($product);

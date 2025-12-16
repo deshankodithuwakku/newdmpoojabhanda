@@ -17,7 +17,12 @@ class Product extends Model
         'monthly_rate',
         'quantity_available',
         'image',
+        'images',
         'status'
+    ];
+
+    protected $casts = [
+        'images' => 'array',
     ];
 
     public function rentals()

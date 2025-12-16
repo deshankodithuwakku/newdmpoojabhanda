@@ -16,10 +16,34 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
+    
+    // Protected routes - only authenticated users can create/update/delete
+    Route::post('/products', [ProductController::class, 'store']);
+    Route::put('/products/{product}', [ProductController::class, 'update']);
+    Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+    
+    Route::post('/customers', [CustomerController::class, 'store']);
+    Route::put('/customers/{customer}', [CustomerController::class, 'update']);
+    Route::delete('/customers/{customer}', [CustomerController::class, 'destroy']);
+    
+    Route::post('/rentals', [RentalController::class, 'store']);
+    Route::put('/rentals/{rental}', [RentalController::class, 'update']);
+    Route::delete('/rentals/{rental}', [RentalController::class, 'destroy']);
+    
+    Route::post('/payments', [PaymentController::class, 'store']);
+    Route::put('/payments/{payment}', [PaymentController::class, 'update']);
+    Route::delete('/payments/{payment}', [PaymentController::class, 'destroy']);
 });
 
-// Public API Routes (no authentication required)
-Route::apiResource('products', ProductController::class);
-Route::apiResource('customers', CustomerController::class);
-Route::apiResource('rentals', RentalController::class);
-Route::apiResource('payments', PaymentController::class);
+// Public API Routes (viewing only - no authentication required)
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{product}', [ProductController::class, 'show']);
+
+Route::get('/customers', [CustomerController::class, 'index']);
+Route::get('/customers/{customer}', [CustomerController::class, 'show']);
+
+Route::get('/rentals', [RentalController::class, 'index']);
+Route::get('/rentals/{rental}', [RentalController::class, 'show']);
+
+Route::get('/payments', [PaymentController::class, 'index']);
+Route::get('/payments/{payment}', [PaymentController::class, 'show']);

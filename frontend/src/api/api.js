@@ -50,8 +50,18 @@ export const authAPI = {
 export const productAPI = {
   getAll: () => apiClient.get('/api/products'),
   getOne: (id) => apiClient.get(`/api/products/${id}`),
-  create: (data) => apiClient.post('/api/products', data),
-  update: (id, data) => apiClient.put(`/api/products/${id}`, data),
+  create: (data) => {
+    const config = data instanceof FormData ? {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    } : {};
+    return apiClient.post('/api/products', data, config);
+  },
+  update: (id, data) => {
+    const config = data instanceof FormData ? {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    } : {};
+    return apiClient.post(`/api/products/${id}?_method=PUT`, data, config);
+  },
   delete: (id) => apiClient.delete(`/api/products/${id}`),
 };
 

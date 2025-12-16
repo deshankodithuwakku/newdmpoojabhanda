@@ -13,6 +13,7 @@ const Customers = () => {
     id_number: ''
   });
   const [editingId, setEditingId] = useState(null);
+  const isLoggedIn = localStorage.getItem('auth_token');
 
   useEffect(() => {
     fetchCustomers();
@@ -29,6 +30,10 @@ const Customers = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isLoggedIn) {
+      alert('Please login to add or edit customers');
+      return;
+    }
     try {
       if (editingId) {
         await customerAPI.update(editingId, formData);
@@ -39,6 +44,9 @@ const Customers = () => {
       resetForm();
     } catch (error) {
       console.error('Error saving customer:', error);
+      if (error.response?.status === 401) {
+        alert('Please login to add or edit customers');
+      }
     }
   };
 
@@ -55,12 +63,19 @@ const Customers = () => {
   };
 
   const handleDelete = async (id) => {
+    if (!isLoggedIn) {
+      alert('Please login to delete customers');
+      return;
+    }
     if (window.confirm('Are you sure you want to delete this customer?')) {
       try {
         await customerAPI.delete(id);
         fetchCustomers();
       } catch (error) {
         console.error('Error deleting customer:', error);
+        if (error.response?.status === 401) {
+          alert('Please login to delete customers');
+        }
       }
     }
   };
@@ -81,9 +96,11 @@ const Customers = () => {
     <div className="customers-container">
       <div className="header">
         <h1>Customers</h1>
-        <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
-          {showForm ? 'Cancel' : 'Add Customer'}
-        </button>
+        {isLoggedIn && (
+          <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
+            {showForm ? 'Cancel' : 'Add Customer'}
+          </button>
+        )}
       </div>
 
       {showForm && (
@@ -146,8 +163,12 @@ const Customers = () => {
                 <td>{customer.phone}</td>
                 <td>{customer.id_number}</td>
                 <td>
-                  <button className="btn btn-sm btn-warning" onClick={() => handleEdit(customer)}>Edit</button>
-                  <button className="btn btn-sm btn-danger" onClick={() => handleDelete(customer.id)}>Delete</button>
+                  {isLoggedIn && (
+                    <>
+                      <button className="btn btn-sm btn-warning" onClick={() => handleEdit(customer)}>Edit</button>
+                      <button className="btn btn-sm btn-danger" onClick={() => handleDelete(customer.id)}>Delete</button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}

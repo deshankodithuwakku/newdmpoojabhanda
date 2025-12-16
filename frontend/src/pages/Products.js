@@ -15,6 +15,9 @@ const Products = () => {
     status: 'available'
   });
   const [editingId, setEditingId] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const isLoggedIn = localStorage.getItem('auth_token');
 
   useEffect(() => {
     fetchProducts();
@@ -31,16 +34,37 @@ const Products = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isLoggedIn) {
+      alert('Please login to add or edit products');
+      return;
+    }
     try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('description', formData.description);
+      formDataToSend.append('daily_rate', formData.daily_rate);
+      formDataToSend.append('weekly_rate', formData.weekly_rate || '');
+      formDataToSend.append('monthly_rate', formData.monthly_rate || '');
+      formDataToSend.append('quantity_available', formData.quantity_available);
+      formDataToSend.append('status', formData.status);
+      
+      // Append images
+      selectedImages.forEach((image, index) => {
+        formDataToSend.append('images[]', image);
+      });
+
       if (editingId) {
-        await productAPI.update(editingId, formData);
+        await productAPI.update(editingId, formDataToSend);
       } else {
-        await productAPI.create(formData);
+        await productAPI.create(formDataToSend);
       }
       fetchProducts();
       resetForm();
     } catch (error) {
       console.error('Error saving product:', error);
+      if (error.response?.status === 401) {
+        alert('Please login to add or edit products');
+      }
     }
   };
 
@@ -59,14 +83,37 @@ const Products = () => {
   };
 
   const handleDelete = async (id) => {
+    if (!isLoggedIn) {
+      alert('Please login to delete products');
+      return;
+    }
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
         await productAPI.delete(id);
         fetchProducts();
       } catch (error) {
         console.error('Error deleting product:', error);
+        if (error.response?.status === 401) {
+          alert('Please login to delete products');
+        }
       }
     }
+  };
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setSelectedImages(files);
+    
+    // Create preview URLs
+    const previews = files.map(file => URL.createObjectURL(file));
+    setImagePreviews(previews);
+  };
+
+  const removeImage = (index) => {
+    const newImages = selectedImages.filter((_, i) => i !== index);
+    const newPreviews = imagePreviews.filter((_, i) => i !== index);
+    setSelectedImages(newImages);
+    setImagePreviews(newPreviews);
   };
 
   const resetForm = () => {
@@ -81,15 +128,19 @@ const Products = () => {
     });
     setEditingId(null);
     setShowForm(false);
+    setSelectedImages([]);
+    setImagePreviews([]);
   };
 
   return (
     <div className="products-container">
       <div className="header">
         <h1>Products</h1>
-        <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
-          {showForm ? 'Cancel' : 'Add Product'}
-        </button>
+        {isLoggedIn && (
+          <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
+            {showForm ? 'Cancel' : 'Add Product'}
+          </button>
+        )}
       </div>
 
       {showForm && (
@@ -143,6 +194,37 @@ const Products = () => {
             <option value="rented">Rented</option>
             <option value="maintenance">Maintenance</option>
           </select>
+          
+          <div className="image-upload-section">
+            <label htmlFor="image-upload" className="image-upload-label">
+              📷 Upload Images (Multiple)
+            </label>
+            <input
+              id="image-upload"
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleImageChange}
+              className="image-upload-input"
+            />
+            {imagePreviews.length > 0 && (
+              <div className="image-preview-grid">
+                {imagePreviews.map((preview, index) => (
+                  <div key={index} className="image-preview-item">
+                    <img src={preview} alt={`Preview ${index + 1}`} />
+                    <button
+                      type="button"
+                      className="remove-image-btn"
+                      onClick={() => removeImage(index)}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          
           <button type="submit" className="btn btn-success">
             {editingId ? 'Update Product' : 'Add Product'}
           </button>
@@ -152,15 +234,29 @@ const Products = () => {
       <div className="products-grid">
         {products.map((product) => (
           <div key={product.id} className="product-card">
+            {product.images && product.images.length > 0 && (
+              <div className="product-images">
+                {product.images.map((image, index) => (
+                  <img
+                    key={index}
+                    src={`http://localhost:8000/storage/${image}`}
+                    alt={`${product.name} ${index + 1}`}
+                    className="product-image"
+                  />
+                ))}
+              </div>
+            )}
             <h3>{product.name}</h3>
             <p>{product.description}</p>
             <p><strong>Daily Rate:</strong> ${product.daily_rate}</p>
             <p><strong>Available:</strong> {product.quantity_available}</p>
             <p><strong>Status:</strong> <span className={`status ${product.status}`}>{product.status}</span></p>
-            <div className="card-actions">
-              <button className="btn btn-sm btn-warning" onClick={() => handleEdit(product)}>Edit</button>
-              <button className="btn btn-sm btn-danger" onClick={() => handleDelete(product.id)}>Delete</button>
-            </div>
+            {isLoggedIn && (
+              <div className="card-actions">
+                <button className="btn btn-sm btn-warning" onClick={() => handleEdit(product)}>Edit</button>
+                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(product.id)}>Delete</button>
+              </div>
+            )}
           </div>
         ))}
       </div>
