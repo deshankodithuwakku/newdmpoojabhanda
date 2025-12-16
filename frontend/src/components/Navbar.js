@@ -1,0 +1,50 @@
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { authAPI } from '../api/api';
+import './Navbar.css';
+
+const Navbar = () => {
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
+
+  const handleLogout = async () => {
+    try {
+      await authAPI.logout();
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user');
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user');
+      navigate('/login');
+    }
+  };
+
+  return (
+    <nav className="navbar">
+      <div className="navbar-brand">
+        <h2>Rental Shop</h2>
+      </div>
+      <ul className="navbar-menu">
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/products">Products</Link></li>
+        <li><Link to="/customers">Customers</Link></li>
+        <li><Link to="/rentals">Rentals</Link></li>
+        {user ? (
+          <>
+            <li className="user-info">Hello, {user.name}</li>
+            <li><button onClick={handleLogout} className="logout-btn">Logout</button></li>
+          </>
+        ) : (
+          <>
+            <li><Link to="/login" className="auth-link-btn">Login</Link></li>
+            <li><Link to="/register" className="auth-link-btn">Register</Link></li>
+          </>
+        )}
+      </ul>
+    </nav>
+  );
+};
+
+export default Navbar;

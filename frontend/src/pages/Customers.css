@@ -1,0 +1,60 @@
+.customers-container {
+  padding: 2rem;
+}
+
+.customer-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.customer-form input,
+.customer-form textarea {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.customer-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.customers-table {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.customers-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.customers-table th,
+.customers-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.customers-table th {
+  background: #667eea;
+  color: white;
+  font-weight: bold;
+}
+
+.customers-table tr:hover {
+  background: #f8f9fa;
+}
+
+.customers-table td button {
+  margin-right: 0.5rem;
+}
