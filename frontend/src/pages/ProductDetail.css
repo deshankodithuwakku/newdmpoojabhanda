@@ -39,9 +39,107 @@
 }
 
 @media (max-width: 768px) {
+  .product-detail-container {
+    padding: 1rem;
+  }
+  
   .product-detail-content {
     grid-template-columns: 1fr;
     gap: 2rem;
+    padding: 1.5rem;
+  }
+  
+  .main-image-container {
+    height: 300px;
+  }
+  
+  .thumbnail {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .product-info h1 {
+    font-size: 1.8rem;
+  }
+  
+  .pricing-details {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .price-tag {
+    width: 100%;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .action-buttons .btn-primary,
+  .action-buttons .btn-secondary {
+    width: 100%;
+  }
+  
+  .social-links-detail {
+    flex-direction: column;
+  }
+  
+  .social-btn {
+    width: 100%;
+    justify-content: center;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-detail-container {
+    padding: 0.75rem;
+  }
+  
+  .back-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+  }
+  
+  .product-detail-content {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  
+  .main-image-container {
+    height: 250px;
+  }
+  
+  .thumbnail {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .product-info h1 {
+    font-size: 1.5rem;
+  }
+  
+  .description-text {
+    font-size: 0.95rem;
+  }
+  
+  .price-tag h3 {
+    font-size: 0.95rem;
+  }
+  
+  .price-amount {
+    font-size: 1.5rem;
+  }
+  
+  .status-badge {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .social-btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.95rem;
   }
 }
 

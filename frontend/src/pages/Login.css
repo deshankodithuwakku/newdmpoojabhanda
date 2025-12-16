@@ -104,3 +104,63 @@
 .auth-link a:hover {
   text-decoration: underline;
 }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 1.5rem;
+  }
+  
+  .auth-card {
+    padding: 2rem;
+    max-width: 100%;
+  }
+  
+  .auth-card h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 1rem;
+  }
+  
+  .auth-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  
+  .auth-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+  
+  .form-group input {
+    padding: 0.65rem;
+    font-size: 0.95rem;
+  }
+  
+  .form-group label {
+    font-size: 0.95rem;
+  }
+  
+  .btn {
+    padding: 0.85rem;
+    font-size: 0.95rem;
+  }
+  
+  .error-message,
+  .success-message {
+    padding: 0.85rem;
+    font-size: 0.95rem;
+  }
+  
+  .auth-link {
+    font-size: 0.95rem;
+  }
+}
