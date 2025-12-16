@@ -101,6 +101,14 @@ const ProductDetail = () => {
             <h3>Contact Us for Rental</h3>
             <p>📍 කිරිපේද්ද හන්දිය, කරන්දෙනිය</p>
             <p>📍 Kiripedda Handiya, Karandeniya</p>
+            <div className="social-links-detail">
+              <a href="https://wa.me/94774288619" target="_blank" rel="noopener noreferrer" className="social-btn whatsapp-btn">
+                📱 WhatsApp
+              </a>
+              <a href="https://www.facebook.com/dmpoojabhanda" target="_blank" rel="noopener noreferrer" className="social-btn facebook-btn">
+                📘 Facebook
+              </a>
+            </div>
             <p className="note">Available exclusively for religious occasions</p>
           </div>
         </div>

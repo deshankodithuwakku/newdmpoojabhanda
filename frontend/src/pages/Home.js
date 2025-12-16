@@ -28,38 +28,6 @@ const Home = () => {
         <p>Rental and Setup of Alms-Giving Equipment and Pirith Pandals</p>
         <p className="location">📍 කිරිපේද්ද හන්දිය, කරන්දෙනිය | Kiripedda Handiya, Karandeniya</p>
       </div>
-      
-      <div className="about-section">
-        <h2>About Our Services</h2>
-        <p>සියලුම උපකරණ හා සේවා සැපයීම ආගමික අවස්ථා සඳහා පමණි</p>
-        <p>All equipment and services provided exclusively for religious occasions</p>
-      </div>
-      
-      <div className="features">
-        <div className="feature-card">
-          <h3>🪑 ධර්ම ආසන සැපයීම</h3>
-          <h4>Dhamma Seating Arrangements</h4>
-          <p>Providing comfortable and appropriate seating for monks during religious ceremonies</p>
-        </div>
-        
-        <div className="feature-card">
-          <h3>🏠 දාන ශාලා උපකරණ</h3>
-          <h4>Alms Hall Equipment</h4>
-          <p>Complete equipment setup for alms-giving halls, suitable for houses with limited space accommodating large numbers of monks</p>
-        </div>
-        
-        <div className="feature-card">
-          <h3>👥 ඕනෑම ප්‍රමාණයකට සේවාව</h3>
-          <h4>Any Scale of Service</h4>
-          <p>Capable of setting up alms halls from very small gatherings to up to 300 monks at once</p>
-        </div>
-        
-        <div className="feature-card">
-          <h3>📋 වෙනත් සේවා</h3>
-          <h4>Additional Services</h4>
-          <p>If you need other services, please inquire for details. Custom arrangements available for your religious events</p>
-        </div>
-      </div>
 
       <div className="products-section">
         <h2>Our Available Equipment / අපගේ ආම්පන්න</h2>
@@ -107,6 +75,53 @@ const Home = () => {
             <p className="no-products">No products available at the moment.</p>
           )}
         </div>
+      </div>
+      
+      <div className="about-section">
+        <h2>About Our Services</h2>
+        <p>සියලුම උපකරණ හා සේවා සැපයීම ආගමික අවස්ථා සඳහා පමණි</p>
+        <p>All equipment and services provided exclusively for religious occasions</p>
+      </div>
+      
+      <div className="features">
+        <div className="feature-card">
+          <h3>🪑 ධර්ම ආසන සැපයීම</h3>
+          <h4>Dhamma Seating Arrangements</h4>
+          <p>Providing comfortable and appropriate seating for monks during religious ceremonies</p>
+        </div>
+        
+        <div className="feature-card">
+          <h3>🏠 දාන ශාලා උපකරණ</h3>
+          <h4>Alms Hall Equipment</h4>
+          <p>Complete equipment setup for alms-giving halls, suitable for houses with limited space accommodating large numbers of monks</p>
+        </div>
+        
+        <div className="feature-card">
+          <h3>👥 ඕනෑම ප්‍රමාණයකට සේවාව</h3>
+          <h4>Any Scale of Service</h4>
+          <p>Capable of setting up alms halls from very small gatherings to up to 300 monks at once</p>
+        </div>
+        
+        <div className="feature-card">
+          <h3>📋 වෙනත් සේවා</h3>
+          <h4>Additional Services</h4>
+          <p>If you need other services, please inquire for details. Custom arrangements available for your religious events</p>
+        </div>
+      </div>
+
+      <div className="contact-social-section">
+        <h2>Contact Us / අප හා සම්බන්ධ වන්න</h2>
+        <div className="social-links">
+          <a href="https://wa.me/94774288619" target="_blank" rel="noopener noreferrer" className="social-link whatsapp">
+            <span className="social-icon">📱</span>
+            <span className="social-text">WhatsApp</span>
+          </a>
+          <a href="https://www.facebook.com/dmpoojabhanda" target="_blank" rel="noopener noreferrer" className="social-link facebook">
+            <span className="social-icon">📘</span>
+            <span className="social-text">Facebook</span>
+          </a>
+        </div>
+        <p className="contact-info">📍 කිරිපේද්ද හන්දිය, කරන්දෙනිය | Kiripedda Handiya, Karandeniya</p>
       </div>
     </div>
   );

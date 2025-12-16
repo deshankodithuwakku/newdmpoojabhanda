@@ -83,6 +83,71 @@
   line-height: 1.6;
 }
 
+/* Contact & Social Section */
+.contact-social-section {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  margin: 3rem 0;
+  color: white;
+}
+
+.contact-social-section h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.social-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.social-link.whatsapp {
+  background: #25D366;
+  color: white;
+}
+
+.social-link.facebook {
+  background: #1877F2;
+  color: white;
+}
+
+.social-icon {
+  font-size: 1.5rem;
+}
+
+.social-text {
+  font-size: 1.1rem;
+}
+
+.contact-info {
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  opacity: 0.95;
+}
+
 /* Products Section */
 .products-section {
   margin-top: 4rem;

@@ -32,8 +32,7 @@ const Navbar = () => {
       <ul className="navbar-menu">
         <li><Link to="/">Home</Link></li>
         <li><Link to="/products">Products</Link></li>
-        <li><Link to="/customers">Customers</Link></li>
-        <li><Link to="/rentals">Rentals</Link></li>
+      
         {user ? (
           <>
             <li className="user-info">Hello, {user.name}</li>
