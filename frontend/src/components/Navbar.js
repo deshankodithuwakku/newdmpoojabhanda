@@ -40,7 +40,7 @@ const Navbar = () => {
             </div>
             <div className="brand-text">
               <h2>DM Pooja Bhanda</h2>
-              <span className="brand-tagline">ඩීම් පූජා භාණ්</span>
+              <span className="brand-tagline">ඩීම් පූජා භාණ්ඩ</span>
             </div>
           </Link>
         </div>
