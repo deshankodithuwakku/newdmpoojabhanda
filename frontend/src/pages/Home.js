@@ -131,20 +131,7 @@ return (
             </div>
         </div>
 
-        <div className="contact-social-section">
-            <h2>Contact Us / අප හා සම්බන්ධ වන්න</h2>
-            <div className="social-links">
-                <a href="tel:+94774288619" className="social-link whatsapp">
-                    <span className="social-icon">📱</span>
-                    <span className="social-text">Phone Call</span>
-                </a>
-                <a href="https://www.facebook.com/dmpoojabhanda" target="_blank" rel="noopener noreferrer" className="social-link facebook">
-                    <span className="social-icon">📘</span>
-                    <span className="social-text">Facebook</span>
-                </a>
-            </div>
-            <p className="contact-info">📍 කිරිපේද්ද හන්දිය, කරන්දෙනිය | Kiripedda Handiya, Karandeniya</p>
-        </div>
+        
     </div>
 );
 };
