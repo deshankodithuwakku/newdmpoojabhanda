@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { productAPI } from '../api/api';
+import { productAPI, getStorageUrl } from '../api/api';
 import './ProductDetail.css';
 
 const ProductDetail = () => {
@@ -45,7 +45,7 @@ const ProductDetail = () => {
             <>
               <div className="main-image-container">
                 <img
-                  src={`http://localhost:8000/storage/${product.images[selectedImage]}`}
+                  src={getStorageUrl(product.images[selectedImage])}
                   alt={product.name}
                   className="main-product-image"
                 />
@@ -55,7 +55,7 @@ const ProductDetail = () => {
                   {product.images.map((image, index) => (
                     <img
                       key={index}
-                      src={`http://localhost:8000/storage/${image}`}
+                      src={getStorageUrl(image)}
                       alt={`${product.name} ${index + 1}`}
                       className={`thumbnail ${selectedImage === index ? 'active' : ''}`}
                       onClick={() => setSelectedImage(index)}
@@ -78,7 +78,7 @@ const ProductDetail = () => {
                 {product.videos.map((video, index) => (
                   <div key={index} className="video-container">
                     <video
-                      src={`http://localhost:8000/storage/${video}`}
+                      src={getStorageUrl(video)}
                       controls
                       className="product-video-player"
                     />

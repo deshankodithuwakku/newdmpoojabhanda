@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { productAPI } from '../api/api';
+import { productAPI, getStorageUrl } from '../api/api';
 import './Products.css';
 
 const Products = () => {
@@ -278,7 +278,7 @@ const Products = () => {
                   {existingImages.map((image, index) => (
                     <div key={`existing-${index}`} className="image-preview-item">
                       <img 
-                        src={`http://localhost:8000/storage/${image}`} 
+                        src={getStorageUrl(image)} 
                         alt={`Existing ${index + 1}`} 
                       />
                       <button
@@ -337,7 +337,7 @@ const Products = () => {
                   {existingVideos.map((video, index) => (
                     <div key={`existing-video-${index}`} className="video-preview-item">
                       <video 
-                        src={`http://localhost:8000/storage/${video}`} 
+                        src={getStorageUrl(video)} 
                         controls 
                         className="video-preview" 
                       />
@@ -422,7 +422,7 @@ const Products = () => {
                 {product.images.map((image, index) => (
                   <img
                     key={index}
-                    src={`http://localhost:8000/storage/${image}`}
+                    src={getStorageUrl(image)}
                     alt={`${product.name} ${index + 1}`}
                     className="product-image"
                   />
@@ -434,7 +434,7 @@ const Products = () => {
                 {product.videos.map((video, index) => (
                   <video
                     key={index}
-                    src={`http://localhost:8000/storage/${video}`}
+                    src={getStorageUrl(video)}
                     controls
                     className="product-video"
                   />

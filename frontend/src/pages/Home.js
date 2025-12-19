@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { productAPI } from '../api/api';
+import { productAPI, getStorageUrl } from '../api/api';
 import './Home.css';
 
 const Home = () => {
@@ -55,7 +55,7 @@ return (
                             {product.images && product.images.length > 0 ? (
                                 <div className="home-product-images">
                                     <img
-                                        src={`http://localhost:8000/storage/${product.images[0]}`}
+                                        src={getStorageUrl(product.images[0])}
                                         alt={product.name}
                                         className="home-product-main-image"
                                     />
