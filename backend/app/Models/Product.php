@@ -18,11 +18,13 @@ class Product extends Model
         'quantity_available',
         'image',
         'images',
+        'videos',
         'status'
     ];
 
     protected $casts = [
         'images' => 'array',
+        'videos' => 'array',
     ];
 
     public function rentals()

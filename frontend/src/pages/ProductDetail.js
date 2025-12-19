@@ -70,6 +70,23 @@ const ProductDetail = () => {
               <p>No images available</p>
             </div>
           )}
+          
+          {product.videos && product.videos.length > 0 && (
+            <div className="product-videos-section">
+              <h3 className="videos-title">📹 Product Videos</h3>
+              <div className="videos-grid">
+                {product.videos.map((video, index) => (
+                  <div key={index} className="video-container">
+                    <video
+                      src={`http://localhost:8000/storage/${video}`}
+                      controls
+                      className="product-video-player"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="product-info-section">

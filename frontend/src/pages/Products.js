@@ -14,6 +14,12 @@ const Products = () => {
   const [editingId, setEditingId] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
+  const [selectedVideos, setSelectedVideos] = useState([]);
+  const [videoPreviews, setVideoPreviews] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
+  const [existingVideos, setExistingVideos] = useState([]);
+  const [removedImages, setRemovedImages] = useState([]);
+  const [removedVideos, setRemovedVideos] = useState([]);
   const isLoggedIn = localStorage.getItem('auth_token');
 
   useEffect(() => {
@@ -42,9 +48,20 @@ const Products = () => {
       formDataToSend.append('daily_rate', formData.daily_rate);
       formDataToSend.append('status', formData.status);
       
-      // Append images
+      // If editing, send existing images/videos that weren't removed
+      if (editingId) {
+        formDataToSend.append('existing_images', JSON.stringify(existingImages));
+        formDataToSend.append('existing_videos', JSON.stringify(existingVideos));
+      }
+      
+      // Append new images
       selectedImages.forEach((image, index) => {
         formDataToSend.append('images[]', image);
+      });
+      
+      // Append new videos
+      selectedVideos.forEach((video, index) => {
+        formDataToSend.append('videos[]', video);
       });
 
       if (editingId) {
@@ -70,6 +87,13 @@ const Products = () => {
       status: product.status
     });
     setEditingId(product.id);
+    
+    // Load existing images and videos
+    setExistingImages(product.images || []);
+    setExistingVideos(product.videos || []);
+    setRemovedImages([]);
+    setRemovedVideos([]);
+    
     setShowForm(true);
   };
 
@@ -93,11 +117,16 @@ const Products = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    setSelectedImages(files);
     
-    // Create preview URLs
-    const previews = files.map(file => URL.createObjectURL(file));
-    setImagePreviews(previews);
+    // Append new files to existing ones
+    setSelectedImages(prev => [...prev, ...files]);
+    
+    // Create preview URLs for new files and append to existing previews
+    const newPreviews = files.map(file => URL.createObjectURL(file));
+    setImagePreviews(prev => [...prev, ...newPreviews]);
+    
+    // Reset input value to allow selecting the same file again
+    e.target.value = '';
   };
 
   const removeImage = (index) => {
@@ -105,6 +134,42 @@ const Products = () => {
     const newPreviews = imagePreviews.filter((_, i) => i !== index);
     setSelectedImages(newImages);
     setImagePreviews(newPreviews);
+  };
+
+  const removeExistingImage = (index) => {
+    const imageToRemove = existingImages[index];
+    setRemovedImages(prev => [...prev, imageToRemove]);
+    setExistingImages(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleVideoChange = (e) => {
+    const files = Array.from(e.target.files);
+    
+    // Append new files to existing ones
+    setSelectedVideos(prev => [...prev, ...files]);
+    
+    // Create preview URLs for new files and append to existing previews
+    const newPreviews = files.map(file => ({
+      url: URL.createObjectURL(file),
+      name: file.name
+    }));
+    setVideoPreviews(prev => [...prev, ...newPreviews]);
+    
+    // Reset input value to allow selecting the same file again
+    e.target.value = '';
+  };
+
+  const removeVideo = (index) => {
+    const newVideos = selectedVideos.filter((_, i) => i !== index);
+    const newPreviews = videoPreviews.filter((_, i) => i !== index);
+    setSelectedVideos(newVideos);
+    setVideoPreviews(newPreviews);
+  };
+
+  const removeExistingVideo = (index) => {
+    const videoToRemove = existingVideos[index];
+    setRemovedVideos(prev => [...prev, videoToRemove]);
+    setExistingVideos(prev => prev.filter((_, i) => i !== index));
   };
 
   const resetForm = () => {
@@ -118,6 +183,12 @@ const Products = () => {
     setShowForm(false);
     setSelectedImages([]);
     setImagePreviews([]);
+    setSelectedVideos([]);
+    setVideoPreviews([]);
+    setExistingImages([]);
+    setExistingVideos([]);
+    setRemovedImages([]);
+    setRemovedVideos([]);
   };
 
   return (
@@ -174,20 +245,111 @@ const Products = () => {
               onChange={handleImageChange}
               className="image-upload-input"
             />
+            
+            {/* Existing Images */}
+            {existingImages.length > 0 && (
+              <div className="existing-media-section">
+                <h4 className="media-section-title">Current Images</h4>
+                <div className="image-preview-grid">
+                  {existingImages.map((image, index) => (
+                    <div key={`existing-${index}`} className="image-preview-item">
+                      <img 
+                        src={`http://localhost:8000/storage/${image}`} 
+                        alt={`Existing ${index + 1}`} 
+                      />
+                      <button
+                        type="button"
+                        className="remove-image-btn"
+                        onClick={() => removeExistingImage(index)}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* New Images */}
             {imagePreviews.length > 0 && (
-              <div className="image-preview-grid">
-                {imagePreviews.map((preview, index) => (
-                  <div key={index} className="image-preview-item">
-                    <img src={preview} alt={`Preview ${index + 1}`} />
-                    <button
-                      type="button"
-                      className="remove-image-btn"
-                      onClick={() => removeImage(index)}
-                    >
-                      ✕
-                    </button>
-                  </div>
-                ))}
+              <div className="new-media-section">
+                <h4 className="media-section-title">New Images</h4>
+                <div className="image-preview-grid">
+                  {imagePreviews.map((preview, index) => (
+                    <div key={`new-${index}`} className="image-preview-item">
+                      <img src={preview} alt={`Preview ${index + 1}`} />
+                      <button
+                        type="button"
+                        className="remove-image-btn"
+                        onClick={() => removeImage(index)}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="video-upload-section">
+            <label htmlFor="video-upload" className="video-upload-label">
+              🎥 Upload Videos (Multiple)
+            </label>
+            <input
+              id="video-upload"
+              type="file"
+              accept="video/*"
+              multiple
+              onChange={handleVideoChange}
+              className="video-upload-input"
+            />
+            
+            {/* Existing Videos */}
+            {existingVideos.length > 0 && (
+              <div className="existing-media-section">
+                <h4 className="media-section-title">Current Videos</h4>
+                <div className="video-preview-grid">
+                  {existingVideos.map((video, index) => (
+                    <div key={`existing-video-${index}`} className="video-preview-item">
+                      <video 
+                        src={`http://localhost:8000/storage/${video}`} 
+                        controls 
+                        className="video-preview" 
+                      />
+                      <p className="video-name">Existing Video {index + 1}</p>
+                      <button
+                        type="button"
+                        className="remove-video-btn"
+                        onClick={() => removeExistingVideo(index)}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* New Videos */}
+            {videoPreviews.length > 0 && (
+              <div className="new-media-section">
+                <h4 className="media-section-title">New Videos</h4>
+                <div className="video-preview-grid">
+                  {videoPreviews.map((preview, index) => (
+                    <div key={`new-video-${index}`} className="video-preview-item">
+                      <video src={preview.url} controls className="video-preview" />
+                      <p className="video-name">{preview.name}</p>
+                      <button
+                        type="button"
+                        className="remove-video-btn"
+                        onClick={() => removeVideo(index)}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -209,6 +371,18 @@ const Products = () => {
                     src={`http://localhost:8000/storage/${image}`}
                     alt={`${product.name} ${index + 1}`}
                     className="product-image"
+                  />
+                ))}
+              </div>
+            )}
+            {product.videos && product.videos.length > 0 && (
+              <div className="product-videos">
+                {product.videos.map((video, index) => (
+                  <video
+                    key={index}
+                    src={`http://localhost:8000/storage/${video}`}
+                    controls
+                    className="product-video"
                   />
                 ))}
               </div>

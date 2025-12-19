@@ -25,6 +25,8 @@ class ProductController extends Controller
             'image' => 'nullable|string',
             'images' => 'nullable|array',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'videos' => 'nullable|array',
+            'videos.*' => 'nullable|file|mimes:mp4,avi,mov,wmv,flv,webm|max:51200',
             'status' => 'nullable|in:available,rented,maintenance',
         ]);
 
@@ -41,6 +43,16 @@ class ProductController extends Controller
                 $imagePaths[] = $path;
             }
             $validated['images'] = $imagePaths;
+        }
+
+        // Handle multiple video uploads
+        if ($request->hasFile('videos')) {
+            $videoPaths = [];
+            foreach ($request->file('videos') as $video) {
+                $path = $video->store('products/videos', 'public');
+                $videoPaths[] = $path;
+            }
+            $validated['videos'] = $videoPaths;
         }
 
         $product = Product::create($validated);
@@ -64,6 +76,10 @@ class ProductController extends Controller
             'image' => 'nullable|string',
             'images' => 'nullable|array',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'videos' => 'nullable|array',
+            'videos.*' => 'nullable|file|mimes:mp4,avi,mov,wmv,flv,webm|max:51200',
+            'existing_images' => 'nullable|string',
+            'existing_videos' => 'nullable|string',
             'status' => 'nullable|in:available,rented,maintenance',
         ]);
 
@@ -78,15 +94,47 @@ class ProductController extends Controller
             $validated['quantity_available'] = $product->quantity_available ?? 1;
         }
 
-        // Handle multiple image uploads
+        // Handle images - merge existing with new uploads
+        $finalImages = [];
+        
+        // Get existing images that weren't removed
+        if ($request->has('existing_images')) {
+            $existingImages = json_decode($request->existing_images, true);
+            if (is_array($existingImages)) {
+                $finalImages = $existingImages;
+            }
+        }
+        
+        // Add new uploaded images
         if ($request->hasFile('images')) {
-            $imagePaths = [];
             foreach ($request->file('images') as $image) {
                 $path = $image->store('products', 'public');
-                $imagePaths[] = $path;
+                $finalImages[] = $path;
             }
-            $validated['images'] = $imagePaths;
         }
+        
+        $validated['images'] = $finalImages;
+
+        // Handle videos - merge existing with new uploads
+        $finalVideos = [];
+        
+        // Get existing videos that weren't removed
+        if ($request->has('existing_videos')) {
+            $existingVideos = json_decode($request->existing_videos, true);
+            if (is_array($existingVideos)) {
+                $finalVideos = $existingVideos;
+            }
+        }
+        
+        // Add new uploaded videos
+        if ($request->hasFile('videos')) {
+            foreach ($request->file('videos') as $video) {
+                $path = $video->store('products/videos', 'public');
+                $finalVideos[] = $path;
+            }
+        }
+        
+        $validated['videos'] = $finalVideos;
 
         $product->update($validated);
         return response()->json($product);
