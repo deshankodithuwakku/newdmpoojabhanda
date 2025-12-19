@@ -105,10 +105,13 @@ const ProductDetail = () => {
           </div>
 
           <div className="pricing-section">
-            <h3> එක නමකට අය කිරීම</h3>
+            <h3>
+              {(product.category || 'දානමය උපකරණ') === 'දානමය උපකරණ'
+                ? '☸ එක ආසනයකට අය කිරීම'
+                : '☸ අය කිරීම'}
+            </h3>
             <div className="pricing-grid">
               <div className="price-card">
-             
                 <span className="price-amount">Rs. {product.daily_rate}</span>
               </div>
             </div>

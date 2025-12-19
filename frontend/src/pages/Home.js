@@ -68,10 +68,17 @@ return (
                             )}
                             <div className="home-product-info">
                                 <h3>{product.name}</h3>
+                                {product.category && (
+                                    <p className="product-category-badge">📂 {product.category}</p>
+                                )}
                                 <p className="product-description">{product.description}</p>
                                 <div className="product-pricing">
                                     <div className="price-item">
-                                        <span className="price-label">එක නමකට අය කිරීම:</span>
+                                        <span className="price-label">
+                                            {(product.category || 'දානමය උපකරණ') === 'දානමය උපකරණ'
+                                                ? 'එක ආසනයකට අය කිරීම:'
+                                                : 'අය කිරීම:'}
+                                        </span>
                                         <span className="price-value">Rs. {product.daily_rate}</span>
                                     </div>
                                 </div>

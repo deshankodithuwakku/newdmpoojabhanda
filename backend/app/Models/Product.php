@@ -12,6 +12,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
+        'category',
         'daily_rate',
         'weekly_rate',
         'monthly_rate',

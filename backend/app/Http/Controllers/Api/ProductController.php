@@ -18,6 +18,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'category' => 'nullable|string|max:255',
             'daily_rate' => 'required|numeric|min:0',
             'weekly_rate' => 'nullable|numeric|min:0',
             'monthly_rate' => 'nullable|numeric|min:0',
@@ -69,6 +70,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'category' => 'nullable|string|max:255',
             'daily_rate' => 'required|numeric|min:0',
             'weekly_rate' => 'nullable|numeric|min:0',
             'monthly_rate' => 'nullable|numeric|min:0',
