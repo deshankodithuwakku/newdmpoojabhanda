@@ -443,7 +443,7 @@ const Products = () => {
             )}
             <h3>{product.name}</h3>
             <p>{product.description}</p>
-            <p><strong>Daily Rate:</strong> Rs. {product.daily_rate}</p>
+            <p><strong>එක නමකට අය කිරීම:</strong> Rs. {product.daily_rate}</p>
             <p><strong>Status:</strong> <span className={`status ${product.status}`}>{product.status}</span></p>
             {isLoggedIn && (
               <div className="card-actions">

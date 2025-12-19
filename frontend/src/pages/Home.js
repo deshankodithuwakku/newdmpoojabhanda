@@ -71,7 +71,7 @@ return (
                                 <p className="product-description">{product.description}</p>
                                 <div className="product-pricing">
                                     <div className="price-item">
-                                        <span className="price-label">Daily Rate:</span>
+                                        <span className="price-label">එක නමකට අය කිරීම:</span>
                                         <span className="price-value">Rs. {product.daily_rate}</span>
                                     </div>
                                 </div>
