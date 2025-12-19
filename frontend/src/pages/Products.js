@@ -256,6 +256,7 @@ const Products = () => {
               <option value="දානමය උපකරණ">දානමය උපකරණ (Alms-giving Equipment)</option>
               <option value="පිරිත් මණ්ඩප">පිරිත් මණ්ඩප (Pirith Pavilions)</option>
               <option value="කඨින චීවර ආසන">කඨින චීවර ආසන (Kathina Cheevara Seats)</option>
+              <option value="ධර්ම මණ්ඩප හා ධර්ම ආසන">ධර්ම මණ්ඩප හා ධර්ම ආසන (Dhamma Pavilions & Seats)</option>
             </select>
           </div>
           
