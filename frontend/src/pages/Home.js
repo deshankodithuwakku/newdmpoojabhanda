@@ -66,7 +66,7 @@ return (
                             ) : (
                                 <div className="home-product-no-image">📷 No Image</div>
                             )}
-                            <div className="home-product-info">
+                            <div className="home-product-info"> 
                                 <h3>{product.name}</h3>
                                 {product.category && (
                                     <p className="product-category-badge">📂 {product.category}</p>
