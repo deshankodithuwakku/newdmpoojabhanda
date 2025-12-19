@@ -9,6 +9,7 @@ const Products = () => {
     name: '',
     description: '',
     daily_rate: '',
+    category: 'දානමය උපකරණ',
     status: 'available'
   });
   const [editingId, setEditingId] = useState(null);
@@ -52,6 +53,7 @@ const Products = () => {
       formDataToSend.append('name', formData.name);
       formDataToSend.append('description', formData.description);
       formDataToSend.append('daily_rate', formData.daily_rate);
+      formDataToSend.append('category', formData.category);
       formDataToSend.append('status', formData.status);
       
       setUploadProgress(20);
@@ -108,6 +110,7 @@ const Products = () => {
       name: product.name,
       description: product.description,
       daily_rate: product.daily_rate,
+      category: product.category || 'දානමය උපකරණ',
       status: product.status
     });
     setEditingId(product.id);
@@ -201,6 +204,7 @@ const Products = () => {
       name: '',
       description: '',
       daily_rate: '',
+      category: 'දානමය උපකරණ',
       status: 'available'
     });
     setEditingId(null);
@@ -240,22 +244,54 @@ const Products = () => {
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           />
-          <input
-            type="number"
-            placeholder="Daily Rate"
-            value={formData.daily_rate}
-            onChange={(e) => setFormData({ ...formData, daily_rate: e.target.value })}
-            required
-            step="0.01"
-          />
-          <select
-            value={formData.status}
-            onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-          >
-            <option value="available">Available</option>
-            <option value="rented">Rented</option>
-            <option value="maintenance">Maintenance</option>
-          </select>
+          
+          <div className="form-group">
+            <label htmlFor="category">Product Category / උපකරණ කාණ්ඩය</label>
+            <select
+              id="category"
+              value={formData.category}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+              required
+            >
+              <option value="දානමය උපකරණ">දානමය උපකරණ (Alms-giving Equipment)</option>
+              <option value="පිරිත් මණ්ඩප">පිරිත් මණ්ඩප (Pirith Pavilions)</option>
+              <option value="කඨින චීවර ආසන">කඨින චීවර ආසන (Kathina Cheevara Seats)</option>
+            </select>
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="daily_rate">
+              {formData.category === 'දානමය උපකරණ' 
+                ? 'එක ආසනයකට අය කිරීම (Charge per Seat)'
+                : 'අය කිරීම (Charge)'}
+            </label>
+            <input
+              id="daily_rate"
+              type="number"
+              placeholder={
+                formData.category === 'දානමය උපකරණ' 
+                  ? 'එක ආසනයකට අය කිරීම'
+                  : 'අය කිරීම'
+              }
+              value={formData.daily_rate}
+              onChange={(e) => setFormData({ ...formData, daily_rate: e.target.value })}
+              required
+              step="0.01"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="status">Status / තත්ත්වය</label>
+            <select
+              id="status"
+              value={formData.status}
+              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+            >
+              <option value="available">Available</option>
+              <option value="rented">Rented</option>
+              <option value="maintenance">Maintenance</option>
+            </select>
+          </div>
           
           <div className="image-upload-section">
             <label htmlFor="image-upload" className="image-upload-label">
@@ -442,8 +478,15 @@ const Products = () => {
               </div>
             )}
             <h3>{product.name}</h3>
+            <p className="product-category">📂 {product.category || 'දානමය උපකරණ'}</p>
             <p>{product.description}</p>
-            <p><strong>එක නමකට අය කිරීම:</strong> Rs. {product.daily_rate}</p>
+            <p>
+              <strong>
+                {(product.category || 'දානමය උපකරණ') === 'දානමය උපකරණ'
+                  ? 'එක ආසනයකට අය කිරීම:'
+                  : 'අය කිරීම:'}
+              </strong> Rs. {product.daily_rate}
+            </p>
             <p><strong>Status:</strong> <span className={`status ${product.status}`}>{product.status}</span></p>
             {isLoggedIn && (
               <div className="card-actions">
