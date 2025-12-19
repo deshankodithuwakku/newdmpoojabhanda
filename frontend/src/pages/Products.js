@@ -20,6 +20,8 @@ const Products = () => {
   const [existingVideos, setExistingVideos] = useState([]);
   const [removedImages, setRemovedImages] = useState([]);
   const [removedVideos, setRemovedVideos] = useState([]);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const isLoggedIn = localStorage.getItem('auth_token');
 
   useEffect(() => {
@@ -41,12 +43,18 @@ const Products = () => {
       alert('Please login to add or edit products');
       return;
     }
+    
+    setIsUploading(true);
+    setUploadProgress(0);
+    
     try {
       const formDataToSend = new FormData();
       formDataToSend.append('name', formData.name);
       formDataToSend.append('description', formData.description);
       formDataToSend.append('daily_rate', formData.daily_rate);
       formDataToSend.append('status', formData.status);
+      
+      setUploadProgress(20);
       
       // If editing, send existing images/videos that weren't removed
       if (editingId) {
@@ -59,23 +67,39 @@ const Products = () => {
         formDataToSend.append('images[]', image);
       });
       
+      setUploadProgress(40);
+      
       // Append new videos
       selectedVideos.forEach((video, index) => {
         formDataToSend.append('videos[]', video);
       });
+      
+      setUploadProgress(60);
 
       if (editingId) {
         await productAPI.update(editingId, formDataToSend);
       } else {
         await productAPI.create(formDataToSend);
       }
-      fetchProducts();
-      resetForm();
+      
+      setUploadProgress(90);
+      await fetchProducts();
+      setUploadProgress(100);
+      
+      setTimeout(() => {
+        resetForm();
+        setIsUploading(false);
+        setUploadProgress(0);
+      }, 500);
     } catch (error) {
       console.error('Error saving product:', error);
       if (error.response?.status === 401) {
         alert('Please login to add or edit products');
+      } else {
+        alert('Error uploading product. Please try again.');
       }
+      setIsUploading(false);
+      setUploadProgress(0);
     }
   };
 
@@ -354,8 +378,38 @@ const Products = () => {
             )}
           </div>
           
-          <button type="submit" className="btn btn-success">
-            {editingId ? 'Update Product' : 'Add Product'}
+          {isUploading && (
+            <div className="upload-progress-container">
+              <div className="upload-progress-bar">
+                <div 
+                  className="upload-progress-fill" 
+                  style={{ width: `${uploadProgress}%` }}
+                >
+                  <span className="upload-progress-text">{uploadProgress}%</span>
+                </div>
+              </div>
+              <p className="upload-status-text">
+                {uploadProgress < 40 ? 'Preparing files...' :
+                 uploadProgress < 60 ? 'Uploading images...' :
+                 uploadProgress < 90 ? 'Uploading videos...' :
+                 uploadProgress < 100 ? 'Finalizing...' : 'Complete!'}
+              </p>
+            </div>
+          )}
+          
+          <button 
+            type="submit" 
+            className="btn btn-success" 
+            disabled={isUploading}
+          >
+            {isUploading ? (
+              <>
+                <span className="spinner"></span>
+                {editingId ? 'Updating...' : 'Adding...'}
+              </>
+            ) : (
+              editingId ? 'Update Product' : 'Add Product'
+            )}
           </button>
         </form>
       )}
