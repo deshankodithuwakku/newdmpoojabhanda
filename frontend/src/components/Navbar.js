@@ -66,7 +66,6 @@ const Navbar = () => {
           ) : (
             <>
               <li><Link to="/login" className="auth-link-btn" onClick={closeMenu}>🔐 Login</Link></li>
-              <li><Link to="/register" className="auth-link-btn" onClick={closeMenu}>📝 Register</Link></li>
             </>
           )}
         </ul>
