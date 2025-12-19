@@ -105,10 +105,10 @@ const ProductDetail = () => {
           </div>
 
           <div className="pricing-section">
-            <h3>Rental Rate</h3>
+            <h3> එක නමකට අය කිරීම</h3>
             <div className="pricing-grid">
               <div className="price-card">
-                <span className="price-period">Daily Rate</span>
+             
                 <span className="price-amount">Rs. {product.daily_rate}</span>
               </div>
             </div>
