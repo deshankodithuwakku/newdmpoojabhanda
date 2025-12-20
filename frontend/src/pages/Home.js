@@ -34,7 +34,7 @@ return (
             <span>කිරිපේද්ද හන්දිය, කරන්දෙනිය | Kiripedda Handiya, Karandeniya</span>
           </div>
           <div className="hero-cta">
-            <a href="#products" className="cta-button primary">View Equipment</a>
+            <a href="#products" className="cta-button primary">අපගේ සේවාවන්</a>
             <a href="tel:+94774288619" className="cta-button secondary">
               Contact Us
             </a>
@@ -43,7 +43,7 @@ return (
       </div>
 
         <div className="products-section" id="products">
-            <h2>Our Available Equipment / අපගේ ආම්පන්න</h2>
+            <h2>අපගේ සේවාවන්</h2>
             <div className="home-products-grid">
                 {products.length > 0 ? (
                     products.map((product) => (
